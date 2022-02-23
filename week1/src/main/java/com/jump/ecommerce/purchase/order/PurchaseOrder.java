@@ -18,6 +18,8 @@ public class PurchaseOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private BigDecimal totalPrice;
+
+    @OneToMany
     private List<PurchaseProduct> products;
 
     @ManyToOne
