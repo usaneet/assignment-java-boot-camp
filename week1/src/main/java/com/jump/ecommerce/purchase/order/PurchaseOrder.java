@@ -8,25 +8,28 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "purchase_order")
 public class PurchaseOrder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private BigDecimal totalPrice;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
 
-    @OneToMany
-    private List<PurchaseProduct> products;
+  private BigDecimal totalPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+  @OneToMany
+  private List<PurchaseProduct> products = Collections.EMPTY_LIST;
 
-    @ManyToOne
-    @JoinColumn(name = "shipping_address_id")
-    private ShippingAddress shippingAddress;
+  @ManyToOne
+  @JoinColumn(name = "customer_id")
+  private Customer customer;
+
+  @ManyToOne
+  @JoinColumn(name = "shipping_address_id")
+  private ShippingAddress shippingAddress;
 }

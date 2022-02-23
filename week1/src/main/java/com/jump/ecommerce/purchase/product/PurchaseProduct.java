@@ -1,5 +1,6 @@
 package com.jump.ecommerce.purchase.product;
 
+import com.jump.ecommerce.product.Product;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,5 +13,10 @@ public class PurchaseProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private BigDecimal purchasePrice;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    private int amount;
+    private BigDecimal price;
 }

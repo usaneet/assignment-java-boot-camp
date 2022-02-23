@@ -12,39 +12,40 @@ import java.util.List;
 @RestController()
 @RequestMapping("/v1/products")
 public class ProductController {
-    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    @Autowired
-    private ProductService productService;
+  @Autowired private ProductService productService;
 
-    @GetMapping
-    public List<Product> listAllProduct() {
-        return productService.listProduct();
-    }
+  @GetMapping
+  public List<Product> listAllProduct() {
+    return productService.listProduct();
+  }
 
-    @GetMapping("/{id}")
-    public Product getProductById(@PathVariable("id") final Long id){
-        return productService.getProductById(id);
-    }
+  @GetMapping("/{id}")
+  public Product getProductById(@PathVariable("id") final Long id) {
+    return productService.getProductById(id);
+  }
 
-    @PostMapping
-    public void createProduct(@RequestBody Product product) {
-        productService.createProduct(product);
-    }
+  @PostMapping
+  public void createProduct(@RequestBody Product product) {
+    productService.createProduct(product);
+  }
 
-    @PutMapping("/{id}")
-    public void updateProduct(@PathVariable("id") final Long id, @RequestBody Product product) {
-        product.setId(id);
-        productService.updateProduct(product);
-    }
+  @PutMapping("/{id}")
+  public void updateProduct(@PathVariable("id") final Long id, @RequestBody Product product) {
+    product.setId(id);
+    productService.updateProduct(product);
+  }
 
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") final Long id){
-        productService.deleteProduct(id);
-    }
+  @DeleteMapping("/{id}")
+  public void deleteProduct(@PathVariable("id") final Long id) {
+    productService.deleteProduct(id);
+  }
 
-    @GetMapping(value = "", params = {"search"})
-    public List<Product> findProductByName(@RequestParam(value = "search") String keyword) {
-        return productService.findByName(keyword);
-    }
+  @GetMapping(
+      value = "",
+      params = {"search"})
+  public List<Product> findProductByName(@RequestParam(value = "search") String keyword) {
+    return productService.findByName(keyword);
+  }
 }
