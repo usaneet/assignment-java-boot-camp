@@ -24,7 +24,7 @@ public class Product implements Serializable {
     private String description;
     private BigDecimal price;
     private String currency;
-    private List<String> images;
+    private String images;
     private String warrantyType;
     private String warrantyDuration;
 

@@ -37,7 +37,6 @@ public class EcommerceApplication {
 		sellerRepository.save(pokaSeller);
 
 		Brand pokaBrand = new Brand();
-		pokaBrand.setSeller(pokaSeller);
 		pokaBrand.setName("Poca SHOE");
 		brandRepository.save(pokaBrand);
 
@@ -47,6 +46,7 @@ public class EcommerceApplication {
 		p1.setPrice(BigDecimal.valueOf(399));
 		p1.setCurrency("THB");
 		p1.setBrand(pokaBrand);
+		p1.setSeller(pokaSeller);
 		productRepository.save(p1);
 
 		Seller adidasSeller = new Seller();
@@ -55,7 +55,6 @@ public class EcommerceApplication {
 		sellerRepository.save(adidasSeller);
 
 		Brand adidas = new Brand();
-		adidas.setSeller(adidasSeller);
 		adidas.setName("Adidas");
 		brandRepository.save(adidas);
 
@@ -65,6 +64,7 @@ public class EcommerceApplication {
 		p2.setPrice(BigDecimal.valueOf(28900));
 		p2.setCurrency("THB");
 		p2.setBrand(adidas);
+		p2.setSeller(adidasSeller);
 		productRepository.save(p2);
 
 		Product p3 = new Product();
@@ -73,6 +73,7 @@ public class EcommerceApplication {
 		p3.setPrice(BigDecimal.valueOf(9900));
 		p3.setCurrency("THB");
 		p3.setBrand(adidas);
+		p3.setSeller(adidasSeller);
 		productRepository.save(p3);
 	}
 
