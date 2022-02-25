@@ -2,6 +2,7 @@ package com.jump.ecommerce.purchase;
 
 import com.jump.ecommerce.customer.shipping.ShippingAddress;
 import com.jump.ecommerce.customer.shipping.ShippingAddressService;
+import com.jump.ecommerce.invoice.Invoice;
 import com.jump.ecommerce.invoice.InvoiceService;
 import com.jump.ecommerce.payment.PaymentMethod;
 import com.jump.ecommerce.product.Product;
@@ -54,16 +55,15 @@ public class PurchaseController {
 
     @PostMapping("/payment")
     public void addPaymentMethod(@RequestBody PaymentMethod paymentMethod, String voucherCode) {
-        if(paymentMethod.getPaymentChannel().equals("cash")){
-            purchaseOrderService.updatePayment(customerId, paymentMethod);
-        }
+        purchaseOrderService.updatePayment(customerId, paymentMethod);
         if( StringUtils.hasLength(voucherCode) ){
             //update PO with the discount price
         }
     }
 
-    @PostMapping("/confirmorder")
-    public String confirmOrder(){
-        return invoiceService.crateInvoice(this.getPurchaseOrder());
+    @GetMapping("/confirmorder")
+    public Invoice confirmOrder(){
+        PurchaseOrder purchaseOrder = this.getPurchaseOrder();
+        return invoiceService.crateInvoice(purchaseOrder);
     }
 }

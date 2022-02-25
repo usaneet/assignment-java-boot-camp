@@ -18,7 +18,7 @@ public class InvoiceService {
     @Autowired
     private PaymentMethodService paymentMethodService;
 
-    public String crateInvoice(PurchaseOrder purchaseOrder) {
+    public Invoice crateInvoice(PurchaseOrder purchaseOrder) {
         PaymentMethod paymentMethod = paymentMethodService.findById(purchaseOrder.getPaymentMethod());
         Invoice invoice = new Invoice();
         invoice.setInvoiceCode(String.valueOf(ThreadLocalRandom.current().nextInt()));
@@ -26,7 +26,10 @@ public class InvoiceService {
         invoice.setInvoiceDueDate(ZonedDateTime.now().plusDays(paymentMethod.getDueDate()));
         invoice.setPayerDetail(purchaseOrder.getCustomer().getName());
         invoice.setPayeeDetail(paymentMethod.getMerchantName());
-        return invoice.getInvoiceCode();
+        invoice.setPurchaseOrder(purchaseOrder);
+        invoice.setPaymentChannel(paymentMethod.getPaymentChannel());
+        invoiceRepository.save(invoice);
+        return invoice;//.getInvoiceCode();
     }
 
     public Invoice getInvoiceDetail(String invoiceCode) {

@@ -11,8 +11,8 @@ public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private int merchantId = 20;
-    private String merchantName = "Counter Service Co.,Ltd";
-    private int dueDate = 2;
-    private String paymentChannel = "cash";
+    private int merchantId;
+    private String merchantName;
+    private int dueDate;
+    private String paymentChannel;
 }

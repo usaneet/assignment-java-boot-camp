@@ -4,6 +4,9 @@ import com.jump.ecommerce.brand.Brand;
 import com.jump.ecommerce.brand.BrandRepository;
 import com.jump.ecommerce.customer.Customer;
 import com.jump.ecommerce.customer.CustomerRepository;
+import com.jump.ecommerce.payment.PaymentMethod;
+import com.jump.ecommerce.payment.PaymentMethodRepository;
+import com.jump.ecommerce.payment.PaymentMethodService;
 import com.jump.ecommerce.product.Product;
 import com.jump.ecommerce.product.ProductRepository;
 import com.jump.ecommerce.seller.Seller;
@@ -33,6 +36,9 @@ public class EcommerceApplication {
 
 	@Autowired
 	CustomerRepository customerRepository;
+
+	@Autowired
+	private PaymentMethodRepository paymentMethodRepository;
 
 	@PostConstruct
 	public void initData(){
@@ -82,9 +88,17 @@ public class EcommerceApplication {
 		productRepository.save(p3);
 
 		Customer customer = new Customer();
-		customer.setId(5);
+		customer.setId(5L);
 		customer.setName("Usanee T.");
 		customerRepository.save(customer);
+
+		PaymentMethod paymentMethod = new PaymentMethod();
+		paymentMethod.setId(3L);
+		paymentMethod.setPaymentChannel("cash");
+		paymentMethod.setMerchantId(20);
+		paymentMethod.setMerchantName("Counter service Co,.Ltd");
+		paymentMethod.setDueDate(2);
+		paymentMethodRepository.save(paymentMethod);
 
 	}
 

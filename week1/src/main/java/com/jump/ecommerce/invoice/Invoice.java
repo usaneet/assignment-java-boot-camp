@@ -11,7 +11,8 @@ import java.time.ZonedDateTime;
 @Table(name = "invoice")
 public class Invoice {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String invoiceCode;
     private ZonedDateTime invoiceDate;
     private ZonedDateTime invoiceDueDate;

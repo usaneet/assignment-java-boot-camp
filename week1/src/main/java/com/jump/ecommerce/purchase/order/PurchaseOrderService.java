@@ -6,6 +6,7 @@ import com.jump.ecommerce.customer.CustomerService;
 import com.jump.ecommerce.customer.shipping.ShippingAddress;
 import com.jump.ecommerce.exception.DataNotFoundException;
 import com.jump.ecommerce.payment.PaymentMethod;
+import com.jump.ecommerce.payment.PaymentMethodService;
 import com.jump.ecommerce.purchase.product.PurchaseProduct;
 import com.jump.ecommerce.purchase.product.PurchaseProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class PurchaseOrderService {
 
     @Autowired
     private PurchaseProductRepository purchaseProductRepository;
+
+    @Autowired
+    private PaymentMethodService paymentMethodService;
 
     @Autowired
     private CustomerService customerService;
@@ -79,8 +83,9 @@ public class PurchaseOrderService {
     }
 
     public void updatePayment(Long customerId, PaymentMethod paymentMethod){
+        PaymentMethod payment = paymentMethodService.findByMerchantId(paymentMethod.getMerchantId());
         PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
-        purchaseOrder.setPaymentMethod(paymentMethod.getId());
+        purchaseOrder.setPaymentMethod(payment.getId());
         purchaseOrderRepository.save(purchaseOrder);
     }
 }
