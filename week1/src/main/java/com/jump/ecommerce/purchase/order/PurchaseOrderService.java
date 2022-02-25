@@ -5,6 +5,7 @@ import com.jump.ecommerce.customer.CustomerRepository;
 import com.jump.ecommerce.customer.CustomerService;
 import com.jump.ecommerce.customer.shipping.ShippingAddress;
 import com.jump.ecommerce.exception.DataNotFoundException;
+import com.jump.ecommerce.payment.PaymentMethod;
 import com.jump.ecommerce.purchase.product.PurchaseProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,5 +64,10 @@ public class PurchaseOrderService {
     public void updateShippingAddress(Long customerId, ShippingAddress shippingAddress){
         PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
         purchaseOrder.setShippingAddress(shippingAddress);
+    }
+
+    public void updatePayment(Long customerId, PaymentMethod paymentMethod){
+        PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
+        purchaseOrder.setPaymentMethod(paymentMethod.getId());
     }
 }

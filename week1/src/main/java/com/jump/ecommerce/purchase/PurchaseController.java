@@ -2,11 +2,13 @@ package com.jump.ecommerce.purchase;
 
 import com.jump.ecommerce.customer.shipping.ShippingAddress;
 import com.jump.ecommerce.customer.shipping.ShippingAddressService;
+import com.jump.ecommerce.payment.PaymentMethod;
 import com.jump.ecommerce.product.Product;
 import com.jump.ecommerce.purchase.order.PurchaseOrder;
 import com.jump.ecommerce.purchase.order.PurchaseOrderService;
 import com.jump.ecommerce.purchase.product.PurchaseProduct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
@@ -44,6 +46,16 @@ public class PurchaseController {
         shippingAddress.setCustomerId(customerId);
         shippingAddressService.save(shippingAddress);
         purchaseOrderService.updateShippingAddress(customerId, shippingAddress);
+    }
+
+    @PostMapping("/payment")
+    public void addPaymentMethod(@RequestBody PaymentMethod paymentMethod, String voucherCode) {
+        if(paymentMethod.getPaymentChannel().equals("cash")){
+            purchaseOrderService.updatePayment(customerId, paymentMethod);
+        }
+        if( StringUtils.hasLength(voucherCode) ){
+            //update PO with the discount price
+        }
     }
 
 }

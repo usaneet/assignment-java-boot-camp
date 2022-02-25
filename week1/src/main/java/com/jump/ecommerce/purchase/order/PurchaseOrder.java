@@ -30,4 +30,6 @@ public class PurchaseOrder {
   @ManyToOne
   @JoinColumn(name = "shipping_address_id")
   private ShippingAddress shippingAddress;
+
+  private long paymentMethod;
 }
