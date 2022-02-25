@@ -7,9 +7,11 @@ import com.jump.ecommerce.customer.shipping.ShippingAddress;
 import com.jump.ecommerce.exception.DataNotFoundException;
 import com.jump.ecommerce.payment.PaymentMethod;
 import com.jump.ecommerce.purchase.product.PurchaseProduct;
+import com.jump.ecommerce.purchase.product.PurchaseProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,9 @@ public class PurchaseOrderService {
 
     @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
+
+    @Autowired
+    private PurchaseProductRepository purchaseProductRepository;
 
     @Autowired
     private CustomerService customerService;
@@ -33,6 +38,7 @@ public class PurchaseOrderService {
             Customer customer = customerService.findById(customerId).orElseThrow(() -> new DataNotFoundException());
             PurchaseOrder newPurchaseOrder = new PurchaseOrder();
             newPurchaseOrder.setCustomer(customer);
+            purchaseOrderRepository.save(newPurchaseOrder);
             return newPurchaseOrder;
         } else {
             return purchaseOrder.get();
@@ -40,11 +46,14 @@ public class PurchaseOrderService {
     }
 
     public void addProduct(Long customerId, PurchaseProduct purchaseProduct){
+        purchaseProductRepository.save(purchaseProduct);
         PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
         purchaseOrder.getProducts().add(purchaseProduct);
+        purchaseOrderRepository.save(purchaseOrder);
     }
 
     public void updateProduct(Long customerId, PurchaseProduct purchaseProduct){
+        purchaseProductRepository.save(purchaseProduct);
         PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
         purchaseOrder.getProducts().stream().forEach(product -> {
             //update purchase product amount
@@ -52,6 +61,7 @@ public class PurchaseOrderService {
                 product.setAmount(purchaseProduct.getAmount());
             }
         });
+        purchaseOrderRepository.save(purchaseOrder);
     }
 
     public void deleteProduct(Long customerId, PurchaseProduct purchaseProduct){
@@ -59,15 +69,18 @@ public class PurchaseOrderService {
         purchaseOrder.getProducts().removeIf(product ->
             product.getId() == purchaseProduct.getId()
         );
+        purchaseOrderRepository.save(purchaseOrder);
     }
 
     public void updateShippingAddress(Long customerId, ShippingAddress shippingAddress){
         PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
         purchaseOrder.setShippingAddress(shippingAddress);
+        purchaseOrderRepository.save(purchaseOrder);
     }
 
     public void updatePayment(Long customerId, PaymentMethod paymentMethod){
         PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
         purchaseOrder.setPaymentMethod(paymentMethod.getId());
+        purchaseOrderRepository.save(purchaseOrder);
     }
 }

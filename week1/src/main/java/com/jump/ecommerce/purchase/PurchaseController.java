@@ -28,7 +28,7 @@ public class PurchaseController {
     /**
      * Assume customerId get from context, extracted from token
      */
-    private Long customerId = Long.getLong("1"); //get customer id from context, extracted from token
+    Long customerId = Long.valueOf(5L); //get customer id from context, extracted from token
 
     @GetMapping
     public PurchaseOrder getPurchaseOrder(){

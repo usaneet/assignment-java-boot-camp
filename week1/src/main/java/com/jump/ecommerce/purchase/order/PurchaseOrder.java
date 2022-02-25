@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class PurchaseOrder {
   private BigDecimal totalPrice;
 
   @OneToMany
-  private List<PurchaseProduct> products = Collections.EMPTY_LIST;
+  private List<PurchaseProduct> products = new ArrayList<>();
 
   @ManyToOne
   @JoinColumn(name = "customer_id")

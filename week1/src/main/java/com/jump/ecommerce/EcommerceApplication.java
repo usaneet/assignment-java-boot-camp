@@ -2,6 +2,8 @@ package com.jump.ecommerce;
 
 import com.jump.ecommerce.brand.Brand;
 import com.jump.ecommerce.brand.BrandRepository;
+import com.jump.ecommerce.customer.Customer;
+import com.jump.ecommerce.customer.CustomerRepository;
 import com.jump.ecommerce.product.Product;
 import com.jump.ecommerce.product.ProductRepository;
 import com.jump.ecommerce.seller.Seller;
@@ -28,6 +30,9 @@ public class EcommerceApplication {
 
 	@Autowired
 	SellerRepository sellerRepository;
+
+	@Autowired
+	CustomerRepository customerRepository;
 
 	@PostConstruct
 	public void initData(){
@@ -75,6 +80,12 @@ public class EcommerceApplication {
 		p3.setBrand(adidas);
 		p3.setSeller(adidasSeller);
 		productRepository.save(p3);
+
+		Customer customer = new Customer();
+		customer.setId(5);
+		customer.setName("Usanee T.");
+		customerRepository.save(customer);
+
 	}
 
 }
