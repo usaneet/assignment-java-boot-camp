@@ -1,4 +1,4 @@
-package com.jump.ecommerce.shipping;
+package com.jump.ecommerce.customer.shipping;
 
 import lombok.Data;
 
@@ -17,4 +17,5 @@ public class ShippingAddress {
     private String postalCode;
     private String city;
     private String telephoneNumber;
+    private Long customerId;
 }

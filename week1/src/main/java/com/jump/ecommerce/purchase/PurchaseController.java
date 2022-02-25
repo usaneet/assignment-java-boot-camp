@@ -1,5 +1,7 @@
 package com.jump.ecommerce.purchase;
 
+import com.jump.ecommerce.customer.shipping.ShippingAddress;
+import com.jump.ecommerce.customer.shipping.ShippingAddressService;
 import com.jump.ecommerce.product.Product;
 import com.jump.ecommerce.purchase.order.PurchaseOrder;
 import com.jump.ecommerce.purchase.order.PurchaseOrderService;
@@ -14,22 +16,34 @@ public class PurchaseController {
     @Autowired
     private PurchaseOrderService purchaseOrderService;
 
+    @Autowired
+    private ShippingAddressService shippingAddressService;
+
+    /**
+     * Assume customerId get from context, extracted from token
+     */
+    private Long customerId = Long.getLong("1"); //get customer id from context, extracted from token
+
+    @GetMapping
+    public PurchaseOrder getPurchaseOrder(){
+        return purchaseOrderService.getPurchaseOrderByCustomerId(customerId);
+    }
+
     @PostMapping("/products")
     public void addProduct(@RequestBody PurchaseProduct product) {
-        Long customerId = Long.getLong("1"); //get customer id from context, extracted from token
         purchaseOrderService.addProduct(customerId, product);
     }
 
     @PutMapping("/products")
     public void updateProduct(@RequestBody PurchaseProduct product) {
-        Long customerId = Long.getLong("1"); //get customer id from context, extracted from token
         purchaseOrderService.updateProduct(customerId, product);
     }
 
-    @GetMapping("/products")
-    public PurchaseOrder getPurchaseOrder(){
-        Long customerId = Long.getLong("1");
-        return purchaseOrderService.getPurchaseOrderByCustomerId(customerId);
+    @PostMapping("/shippingaddress")
+    public void addShippingAddress(@RequestBody ShippingAddress shippingAddress) {
+        shippingAddress.setCustomerId(customerId);
+        shippingAddressService.save(shippingAddress);
+        purchaseOrderService.updateShippingAddress(customerId, shippingAddress);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.jump.ecommerce.shipping;
+package com.jump.ecommerce.customer.shipping;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

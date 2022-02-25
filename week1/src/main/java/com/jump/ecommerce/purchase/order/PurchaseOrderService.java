@@ -3,6 +3,7 @@ package com.jump.ecommerce.purchase.order;
 import com.jump.ecommerce.customer.Customer;
 import com.jump.ecommerce.customer.CustomerRepository;
 import com.jump.ecommerce.customer.CustomerService;
+import com.jump.ecommerce.customer.shipping.ShippingAddress;
 import com.jump.ecommerce.exception.DataNotFoundException;
 import com.jump.ecommerce.purchase.product.PurchaseProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class PurchaseOrderService {
     @Autowired
     private CustomerService customerService;
 
+    /**
+     * Idea is 1 PO/cart per 1 customer at a time, then if this customer hasn't his PO system will create a new one
+     * @param customerId
+     * @return
+     */
     public PurchaseOrder getPurchaseOrderByCustomerId(Long customerId){
         Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepository.findByCustomerId(customerId);
         if(!purchaseOrder.isPresent()){
@@ -47,4 +53,15 @@ public class PurchaseOrderService {
         });
     }
 
+    public void deleteProduct(Long customerId, PurchaseProduct purchaseProduct){
+        PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
+        purchaseOrder.getProducts().removeIf(product ->
+            product.getId() == purchaseProduct.getId()
+        );
+    }
+
+    public void updateShippingAddress(Long customerId, ShippingAddress shippingAddress){
+        PurchaseOrder purchaseOrder = this.getPurchaseOrderByCustomerId(customerId);
+        purchaseOrder.setShippingAddress(shippingAddress);
+    }
 }

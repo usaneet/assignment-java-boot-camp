@@ -1,14 +1,12 @@
 package com.jump.ecommerce.purchase.order;
 
 import com.jump.ecommerce.customer.Customer;
-import com.jump.ecommerce.product.Product;
 import com.jump.ecommerce.purchase.product.PurchaseProduct;
-import com.jump.ecommerce.shipping.ShippingAddress;
+import com.jump.ecommerce.customer.shipping.ShippingAddress;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
