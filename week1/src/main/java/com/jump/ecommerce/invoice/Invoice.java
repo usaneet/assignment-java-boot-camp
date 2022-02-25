@@ -12,10 +12,12 @@ import java.time.ZonedDateTime;
 public class Invoice {
     @Id
     private String id;
+    private String invoiceCode;
     private ZonedDateTime invoiceDate;
     private ZonedDateTime invoiceDueDate;
     private String paymentChannel;
     private String payeeDetail;
+    private String payerDetail;
 
     @OneToOne
     @JoinColumn(name = "purchase_order_id")

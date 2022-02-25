@@ -2,6 +2,7 @@ package com.jump.ecommerce.purchase;
 
 import com.jump.ecommerce.customer.shipping.ShippingAddress;
 import com.jump.ecommerce.customer.shipping.ShippingAddressService;
+import com.jump.ecommerce.invoice.InvoiceService;
 import com.jump.ecommerce.payment.PaymentMethod;
 import com.jump.ecommerce.product.Product;
 import com.jump.ecommerce.purchase.order.PurchaseOrder;
@@ -20,6 +21,9 @@ public class PurchaseController {
 
     @Autowired
     private ShippingAddressService shippingAddressService;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
     /**
      * Assume customerId get from context, extracted from token
@@ -58,4 +62,8 @@ public class PurchaseController {
         }
     }
 
+    @PostMapping("/confirmorder")
+    public String confirmOrder(){
+        return invoiceService.crateInvoice(this.getPurchaseOrder());
+    }
 }
